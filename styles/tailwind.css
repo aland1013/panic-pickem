@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .custom-class {
+    @apply ...;
+  }
+}
+
+html {
+  @apply bg-black;
+}
+
+.button {
+  @apply text-primary;
+  @apply border;
+  @apply border-primary;
+  @apply px-4;
+  @apply py-1;
+}
+
+.button:hover {
+  @apply border-primary-light;
+  @apply text-primary-light;
+}
+
+.button:disabled {
+  @apply border-primary-dark;
+  @apply text-primary-dark
+}
+
+input {
+  @apply bg-black;
+  @apply accent-primary;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  @apply border-primary;
+  -webkit-text-fill-color: rgb(76,175,80);
+  -webkit-box-shadow: 0 0 inset initial;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="text"],
+input[type="password"] {
+  -webkit-appearance: none;
+   -moz-appearance:    none;
+   appearance:         none;   
+   -webkit-border-radius: 0;
+   -moz-border-radius: 0;
+   border-radius: 0;
+}
+
+::-webkit-calendar-picker-indicator {
+  color-scheme: dark;
+}
+
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+.checkbox {
+  position: absolute;
+  @apply h-3;
+  @apply w-3;
+  @apply border;
+  @apply border-primary-dark;
+  @apply bg-black;
+}
+
+input:active ~ .checkbox {
+  @apply bg-primary-light;
+}
+
+input:hover ~ .checkbox {
+  @apply border-primary-light;
+}
+
+input:checked ~ .checkbox {
+  @apply border-primary;
+  @apply bg-primary;
+}
+
+.checkbox:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+input:checked ~ .checkbox:after {
+  display: block;
+}
+
+.checkbox:after {
+  left: 1px;
+  bottom: 0px;
+  /* width: 6px; */
+  /* height: 12px; */
+  @apply h-3.5;
+  @apply w-2;
+  @apply border-black;
+  border-width: 0 4px 4px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+
+.link:hover {
+  @apply text-primary-light;
+}
+
+textarea {
+  @apply bg-black;
+  @apply accent-primary;
+}
