@@ -31,20 +31,31 @@ export const loader:LoaderFunction = async ({ params, request }) => {
   return json(data)
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ params, request }) => {
   await requireAdminUserSession(request)
   const form = await request.formData()
   const action = form.get('_action')
+
   if (action === 'cancel') return null
-
-  const [, pickId] = action.split(' ')
-  const isBustout = Boolean(form.get(pickId))
   
-  await db.pick.update({
-    where: { id: pickId },
-    data: { isBustout }
-  })
-
+  if (action === 'score' ) {
+    const { entryId } = params
+    const score = Number(form.get('score'))
+    
+    await db.entry.update({
+      where: { id: entryId },
+      data: { score }
+     })    
+  } else if (action.includes('update')) {
+    const [, pickId] = action.split(' ')
+    const isBustout = Boolean(form.get(pickId))
+    
+    await db.pick.update({
+      where: { id: pickId },
+      data: { isBustout }
+    })
+  }
+  
   return null
 }
 
@@ -102,6 +113,25 @@ const EditEntryRoute = () => {
               ))}
             </tbody>
           </table>
+          <div className='flex items-center justify-center space-x-4'>
+            <label className='flex items-center space-x-2'>
+              <div>score:</div>
+              <input
+                name='score'
+                type='number'
+                defaultValue={entry.score}
+                className='w-16 text-center border border-primary-dark py-1'
+              />
+            </label>
+            <div className='flex space-x-4'>
+              <button type='submit' name='_action' value='score' className='button'>
+                update
+              </button>
+              <button type='submit' name='_action' value='cancel' className='button'>
+                cancel
+              </button>
+            </div>
+          </div>
         </Form>
       </div>
     </>
