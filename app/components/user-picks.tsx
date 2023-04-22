@@ -141,7 +141,7 @@ const UserPicks = () => {
   const picksComplete = picksMade === NUM_PICKS
 
   const tweet = picks ? `#PanicPick5 - ${dayjs(date).format('M/DD/YYYY')}\n\n${picks
-    .map(p => `${p.song.title}`)
+    .map(p => `${p?.song?.title}`)
     .join('\n')}\n\nhttps://panic-pickem.fly.dev` : null
   const encodedTweet = encodeURIComponent(tweet)
 
