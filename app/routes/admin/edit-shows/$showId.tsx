@@ -236,7 +236,7 @@ const EditShowRoute = () => {
         </div>
         <div className='text-lg pb-4'>{formattedDate}</div>
 
-        <Form reloadDocument method='post' autoComplete='off' className='w-full'>
+        <Form method='post' autoComplete='off' className='w-full'>
           <input type='hidden' name='showId' value={show.id} />
 
           <div className='w-full flex flex-col justify-center space-y-4 pb-4'>
