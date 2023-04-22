@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Form } from '@remix-run/react'
+import dayjs from 'dayjs'
 
 import CountdownTimer from '~/components/countdown-timer'
 import SongSelect from '~/components/song-select'
@@ -7,6 +8,7 @@ import { useEntry, usePrevShowSongIds, useShow, useSongs } from '~/utils/data'
 import { NUM_PICKS } from '~/utils/constant'
 import SongFilter from './song-filter'
 import { classNames } from '~/utils/string'
+import twitter_logo from '~/twitter_logo.png'
 
 const UserPicks = () => {
   const {
@@ -138,40 +140,37 @@ const UserPicks = () => {
   const picksMade = picks.filter(p => !!p.id).length
   const picksComplete = picksMade === NUM_PICKS
 
+  const tweet = `#PanicPick5 - ${dayjs(date).format('M/DD/YYYY')}\n\n${picks
+    .map(p => `${p.song.title}`)
+    .join('\n')}\n\nhttps://panic-pickem.fly.dev`
+  const encodedTweet = encodeURIComponent(tweet)
+
   return (
     <>
       <CountdownTimer date={date} />
       <div className='flex flex-col text-medium text-sm text-center pb-4'>
         <div>pick {NUM_PICKS} songs from most- to least-confident</div>
-        <div>each pick is assigned a corresponding point value ({NUM_PICKS}-1)</div>
+        <div>
+          each pick is assigned a corresponding point value ({NUM_PICKS}-1)
+        </div>
         <div className='flex flex-wrap items-center justify-center'>
           <div className='pr-2'>song list is color-coded: </div>
           <div className='flex items-center justify-center'>
             <div className='mr-2 h-1 w-1 rounded-full bg-red-700' />
-            <div
-              className='mr-4 text-red-700'
-            >
-              last show
-            </div>
+            <div className='mr-4 text-red-700'>last show</div>
           </div>
           <div className='flex items-center justify-center'>
             <div className='mr-2 h-1 w-1 rounded-full bg-blue-700' />
-            <div
-              className='mr-4 text-blue-700'
-            >
-              2 shows ago
-            </div>
+            <div className='mr-4 text-blue-700'>2 shows ago</div>
           </div>
           <div className='flex items-center justify-center'>
             <div className='mr-2 h-1 w-1 rounded-full bg-purple-700' />
-            <div
-              className='mr-4 text-purple-700'
-            >
-              3 shows ago
-            </div>
+            <div className='mr-4 text-purple-700'>3 shows ago</div>
           </div>
         </div>
-      <div className='text-white py-1 mt-2'>** BUSTOUT BONUS: +5 points if song not played in 100+ shows **</div>
+        <div className='text-white py-1 mt-2'>
+          ** BUSTOUT BONUS: +5 points if song not played in 100+ shows **
+        </div>
       </div>
       {showEntry ? (
         <>
@@ -194,10 +193,23 @@ const UserPicks = () => {
               ))}
             </tbody>
           </table>
-          <div className='w-full flex justify-center'>
+          <div className='w-full flex justify-center space-x-2'>
             <button className='button' onClick={handleEditPicks}>
               edit picks
             </button>
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodedTweet}`}
+              target='_blank'
+              rel='noreferrer'
+              className='button'
+            >
+              <img
+                src={twitter_logo}
+                className='inline w-6 pr-2'
+                alt='twitter logo'
+              />
+              tweet picks
+            </a>
           </div>
         </>
       ) : (
