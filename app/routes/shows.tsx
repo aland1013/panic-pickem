@@ -35,7 +35,7 @@ const Shows = () => {
         
         // only show current run and future shows
         // todo: make this better
-        if (dayjs(date).isBefore(dayjs('2023-03-24'))) return null
+        if (dayjs(date).isBefore(dayjs('2023-06-22'))) return null
 
         const formattedDate = dayjs(date).format('YYYY-MM-DD')
         const { name, city, state } = venue
