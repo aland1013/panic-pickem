@@ -27,7 +27,7 @@ interface Pick extends PickType {
 export interface GetEntryReturnType extends Entry {
   picks: Pick[]
   user: {
-    username: String
+    username: string
   }
 }
 
